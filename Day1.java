@@ -3,30 +3,28 @@ package com.sk.demo.challange;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class Day1A {
     public static void main(String[] args) {
-        String fileName = "C:\\Users\\sonal\\OneDrive\\Desktop\\input.txt";
-
-        BufferedReader reader;
-        try {
-            reader = new BufferedReader(new FileReader(fileName));
+        Set<Integer> sortedSet = new TreeSet<>(Collections.reverseOrder());
+        try(BufferedReader reader = new BufferedReader(new FileReader("C:\\Users\\sonal\\OneDrive\\Desktop\\input.txt"))) {
             String line = reader.readLine();
             int max = -1;
             while (line != null) {
                 int sum=0;
                 while(line != null && line.trim().length()!= 0) {
                     sum += Integer.parseInt(line);
-                    System.out.println(line+"    "+sum);
                     line = reader.readLine();
                 }
+                sortedSet.add(sum);
                 max = Math.max(max, sum);
                 line = reader.readLine();
-                System.out.println("MAX = "+max);
-                System.out.println("=======================");
             }
             System.out.println("Final Max : "+max);
-            reader.close();
+            System.out.println("Max 3 sum : "+sortedSet.stream().limit(3).collect(Collectors.summarizingInt(i->i)).getSum());
+
         } catch (IOException e) {
             e.printStackTrace();
         }
