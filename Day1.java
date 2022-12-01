@@ -9,24 +9,23 @@ import java.util.stream.Collectors;
 public class Day1A {
     public static void main(String[] args) {
         Set<Integer> sortedSet = new TreeSet<>(Collections.reverseOrder());
+        int max = -1, sum=0;
         try(BufferedReader reader = new BufferedReader(new FileReader("C:\\Users\\sonal\\OneDrive\\Desktop\\input.txt"))) {
             String line = reader.readLine();
-            int max = -1;
             while (line != null) {
-                int sum=0;
-                while(line != null && line.trim().length()!= 0) {
+                if(line.trim().length() == 0) {
+                    max = Math.max(max, sum);
+                    sum = 0;
+                }else {
                     sum += Integer.parseInt(line);
-                    line = reader.readLine();
+                    sortedSet.add(sum);
                 }
-                sortedSet.add(sum);
-                max = Math.max(max, sum);
                 line = reader.readLine();
             }
-            System.out.println("Final Max : "+max);
-            System.out.println("Max 3 sum : "+sortedSet.stream().limit(3).collect(Collectors.summarizingInt(i->i)).getSum());
-
         } catch (IOException e) {
             e.printStackTrace();
         }
+        System.out.println("Final Max : "+max);
+        System.out.println("Max 3 sum : "+sortedSet.stream().limit(3).collect(Collectors.summarizingInt(i->i)).getSum());
     }
 }
