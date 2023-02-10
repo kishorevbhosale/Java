@@ -1,0 +1,114 @@
+package dmpractice.CoffeeShopApp;
+
+import java.util.Scanner;
+
+class Menu {
+    public final String[] items = {"Latte", "Cappuccino", "Espresso", "Mocha", "Tea"};
+    private final double[] prices = {23.50, 33.75, 22.75, 24.00, 22.25};
+
+    public void showMenu() {
+        System.out.println("Coffee shop menu");
+        for (int i = 0; i < items.length; i++) {
+            System.out.println(i + 1 + ". " + items[i] + " : Rs. " + prices[i]);
+        }
+    }
+
+    public double getPrice(int itemIndex) {
+        return prices[itemIndex];
+    }
+}
+
+class Order {
+    private final Menu menu;
+    private final int[] quantities;
+
+    public Order(Menu menu) {
+        this.menu = menu;
+        this.quantities = new int[menu.items.length];
+    }
+
+    public void placeOrder() {
+        Scanner sc = new Scanner(System.in);
+        for (int i = 0; i < menu.items.length; i++) {
+            System.out.print("Enter the quantity of " + menu.items[i] + ": ");
+            quantities[i] = sc.nextInt();
+        }
+        System.out.println("Your order:");
+        double total = 0.0;
+        for (int i = 0; i < menu.items.length; i++) {
+            if (quantities[i] > 0) {
+                System.out.println(menu.items[i] + " * " + quantities[i] + " : " + quantities[i] * menu.getPrice(i));
+                total += quantities[i] * menu.getPrice(i);
+            }
+        }
+        System.out.println("Total bill (INR) : " + total);
+    }
+}
+
+public class CoffeeShop {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        Menu menu = new Menu();
+        while (true) {
+            System.out.println("Welcome to coffee shop!");
+            System.out.println("1. show menu");
+            System.out.println("2. place order");
+            System.out.println("3. exit");
+            System.out.println("Enter your choice");
+            int choice = sc.nextInt();
+            switch (choice) {
+                case 1:
+                    menu.showMenu();
+                    break;
+                case 2:
+                    Order order = new Order(menu);
+                    order.placeOrder();
+                    break;
+                case 3:
+                    System.out.println("Thanks for visiting!");
+                    System.exit(0);
+                    break;
+                default:
+                    System.out.println("Invalid choice, plz try again...");
+                    break;
+            }
+        }
+    }
+}
+
+/*
+Welcome to coffee shop!
+1. show menu
+2. place order
+3. exit
+Enter your choice
+1
+Coffee shop menu
+1. Latte : Rs. 23.5
+2. Cappuccino : Rs. 33.75
+3. Espresso : Rs. 22.75
+4. Mocha : Rs. 24.0
+5. Tea : Rs. 22.25
+Welcome to coffee shop!
+1. show menu
+2. place order
+3. exit
+Enter your choice
+2
+Enter the quantity of Latte: 1
+Enter the quantity of Cappuccino: 0
+Enter the quantity of Espresso: 0
+Enter the quantity of Mocha: 2
+Enter the quantity of Tea: 4
+Your order:
+Latte * 1 : 23.5
+Mocha * 2 : 48.0
+Tea * 4 : 89.0
+Total bill (INR) : 160.5
+Welcome to coffee shop!
+1. show menu
+2. place order
+3. exit
+Enter your choice
+3
+ */
